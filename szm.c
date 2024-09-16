@@ -2192,7 +2192,7 @@ extern "C"
         float* npx;
         OEx.GetSources(ccdimgC,//input buffer (ccd-frame)
             w,h,
-            0.0002,//fraction source-occuped square
+            0.0003,//fraction source-occuped square
             5000,//accepted number of false detections
             20000,//saturation threshold value
             nstr,// number of detected sources
