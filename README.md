@@ -18,15 +18,17 @@ Installation and usage.
 
 g++ -fPIC -shared -o libszm.so szm.c
 
+2. Download sample files via http://outreach.puldb.ru/fits.zip
+
 Next, there are two examples of usage...
 
-2. Run the ht-and-detect-in-frame-set.py by:
+3. Run the ht-and-detect-in-frame-set.py by:
 
 python3 ht-and-detect-in-frame-set.py
 
 This will show a file name that contains a meteor event and create a plot with the detection peak.
 
-3. Run ht-and-detect.py by:
+4. Run ht-and-detect.py by:
 
 python3 ht-and-detect.py
 
