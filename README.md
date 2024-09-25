@@ -18,6 +18,10 @@ Installation and usage.
 
 g++ -fPIC -shared -o libszm.so szm.c
 
+or
+
+g++ -std=gnu++17 -fPIC -shared -o libszm.so szm.c
+
 2. Download sample files via http://outreach.puldb.ru/fits.zip , and unzip these files to the fits folder.
 
 Next, there are two examples of usage...
