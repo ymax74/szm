@@ -1,6 +1,8 @@
 #include <stdlib.h>
 #include "stdio.h"
 #include <math.h>
+#include <time.h>
+#include <stack>
 #define pi        3.1415926535897932
 
 class cmnkB  
@@ -1675,82 +1677,53 @@ void IEx::GetCen2(unsigned short** ap17img,unsigned short** nesosdQ,int tt100, i
 	}
 	int y=0;
 }
-void OneSour(int* ism,int* nx,int* ny,int* xx,int* xy, int x,int y,long** img3,unsigned short** nesosd,int bx,int by,int ex,int ey,int z,int* glubrek,int* Imax,unsigned short**ap17img,int* mxi,int*myi,int urnas,int nob,int* npix)
-{
-	//if (glubrek>6425)
-	//{
-	//	int y=0;
-	//}
-	//if (glubrek>mxgrek) mxgrek=glubrek;
+void OneSour(int* ism, int* nx, int* ny, int* xx, int* xy, int x, int y,
+             long** img3, unsigned short** nesosd, int bx, int by, int ex, int ey,
+             int z, int* glubrek, int* Imax, unsigned short** ap17img,
+             int* mxi, int* myi, int urnas, int nob, int* npix) {
+    
+    (*glubrek)++;
+    
+    std::stack<std::pair<int, int>> stack;
+    stack.push({x, y});
+    
+    while (!stack.empty()) {
+        auto [sx, sy] = stack.top();
+        stack.pop();
 
-	(*glubrek)++;
-	if (!nesosd[y][x])
-	{ 
-		int dx[8]={-1, 0, 1,-1,1,-1,0,1};
-		int dy[8]={-1,-1,-1, 0,0, 1,1,1};
-		nesosd[y][x]=nob+1;
-		(*npix)++;
-		*ism=*ism+img3[y][x];
-		if (x<*nx) *nx=x;
-		if (x>*xx) *xx=x;
-		if (y<*ny) *ny=y;
-		if (y>*xy) *xy=y;
-		bool uge=false;
-		if (ap17img[y][x]>*Imax)
-		{
-			*Imax=ap17img[y][x];
-			*mxi=x;
-			*myi=y;
-		}
-		do
-		{
-			uge=false;
-			int sx=x;
-			int sy=y;
-			for (int i=0;i<8;i++)
-			{
-				int y2=sy+dy[i];
-				int x2=sx+dx[i];
-				if (bx<=x2&&x2<=ex&&by<=y2&&y2<=ey)
-				{
-					if ((img3[y2][x2]>z ||ap17img[y2][x2]>=urnas)&& !nesosd[y2][x2])
-					{
-						if (uge)
-						{
-							if ((*glubrek)<1000)
-							{
-								OneSour(ism,nx,ny,xx,xy,x2,y2,img3,nesosd,bx,by,ex,ey,z,glubrek,Imax,ap17img,mxi,myi,urnas,nob,npix);
-							}
-						} else
-						{
-							x=x2;
-							y=y2;
-							nesosd[y2][x2]=nob+1;
-							(*npix)++;
-							*ism=*ism+img3[y2][x2];
-							if (img3[y2][x2]>*Imax)
-							{
-								*Imax=img3[y2][x2];
-								*mxi=x2;
-								*myi=y2;
-							}
+        if (!nesosd[sy][sx]) {
+            nesosd[sy][sx] = nob + 1;
+            (*npix)++;
+            *ism += img3[sy][sx];
+            if (sx < *nx) *nx = sx;
+            if (sx > *xx) *xx = sx;
+            if (sy < *ny) *ny = sy;
+            if (sy > *xy) *xy = sy;
+            bool uge = false;
+            if (ap17img[sy][sx] > *Imax) {
+                *Imax = ap17img[sy][sx];
+                *mxi = sx;
+                *myi = sy;
+            }
 
+            int dx[8] = {-1, 0, 1, -1, 1, -1, 0, 1};
+            int dy[8] = {-1, -1, -1, 0, 0, 1, 1, 1};
 
-							if (x2<*nx) *nx=x2;
-							if (x2>*xx) *xx=x2;
-							if (y2<*ny) *ny=y2;
-							if (y2>*xy) *xy=y2;
-							uge=true;
-						}
-			
-					}
-				}
-			}
-		} while (uge);
-	
-	}
-	(*glubrek)--;
+            for (int i = 0; i < 8; i++) {
+                int x2 = sx + dx[i];
+                int y2 = sy + dy[i];
+                if (bx <= x2 && x2 <= ex && by <= y2 && y2 <= ey) {
+                    if ((img3[y2][x2] > z || ap17img[y2][x2] >= urnas) && !nesosd[y2][x2]) {
+                        stack.push({x2, y2});
+                    }
+                }
+            }
+        }
+    }
+    
+    (*glubrek)--;
 }
+
 void qsortRecursive(int *mas, int size) 
 {
     
