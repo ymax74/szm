@@ -3,7 +3,7 @@ Here is a code for astronomical source image extraction procedures (C++) and its
 
 Detection of meteor event images using the SSA400 telescope at the Assy-Turgen Observatory
 
-I.Izmailov (1,2), M.Khovrichev$ (1,2), A.Tolstoy(2), S. Pavlov(2), D. Bikulova(1,2), M. Krugov(3)
+I.Izmailov (1,2), M.Khovrichev$ (1,2), A.Tolstoy(2), S. Pavlov(2), D. Bikulova(1,2), M. Krugov(3), S. Sittykova(3)
 
 (1) The Central Astronomical Observatory of the RAS at Pulkovo , 
 (2) IAA RAS, 
